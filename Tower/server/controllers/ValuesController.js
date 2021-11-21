@@ -5,9 +5,9 @@ export class ValuesController extends BaseController {
   constructor() {
     super('api/values')
     this.router
+      .use(Auth0Provider.getAuthorizedUserInfo)
       .get('', this.getAll)
       // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
-      .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.create)
   }
 
