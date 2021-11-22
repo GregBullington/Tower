@@ -10,18 +10,17 @@ import { eventsService } from "../services/EventsService"
 export default {
   setup() {
     const route = useRoute()
-    watchEffect(async () => {
+    watchEffect(async() => {
       try {
         if (route.params.id) {
-          events
           await eventsService.getAllTowerEvents(route.params.id)
-
         }
       } catch (error) {
         logger.error(error)
         Pop.toast("Something went wrong", 'error')
       }
     })
+
 
 
 

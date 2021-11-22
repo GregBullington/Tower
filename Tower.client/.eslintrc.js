@@ -11,8 +11,7 @@ module.exports = {
     node: true
   },
   extends: [
-    'plugin:vue/vue3-strongly-recommended',
-    '@vue/standard'
+    'plugin:vue/vue3-strongly-recommended', 'plugin:vue/base'
   ],
   parserOptions: {
     ecmaVersion: 2020
