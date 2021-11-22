@@ -11,7 +11,7 @@ export class TowerEventsController extends BaseController {
       .get('', this.getAllTowerEvents)
       .get('/:id', this.getTowerEventById)
       .put('/:id', this.editTowerEvent)
-      .delete('/:id', this.editTowerEvent)
+      .delete('/:id', this.cancelTowerEvent)
   }
 
   async createTowerEvent(req, res, next) {
@@ -45,6 +45,7 @@ export class TowerEventsController extends BaseController {
 
   async editTowerEvent(req, res, next) {
     try {
+      req.body.creatorId = req.userInfo.id
       const id = req.params.id
       const updateData = req.body
       updateData._id = id
@@ -59,9 +60,8 @@ export class TowerEventsController extends BaseController {
   async cancelTowerEvent(req, res, next) {
     try {
       req.body.creatorId = req.userInfo.id
-      req.body.eventId = req.params.eventId
-      req.body.isCanceled = true
-      const updatedEvent = await towerEventsService.cancelTowerEvent(req.body)
+      const id = req.params.id
+      const updatedEvent = await towerEventsService.editTowerEvent(id, { isCanceled: true })
       res.send(updatedEvent)
     } catch (error) {
       next(error)
