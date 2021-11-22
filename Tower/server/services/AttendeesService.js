@@ -38,6 +38,9 @@ class AttendeesService {
       throw new Forbidden('Invalid request!')
     }
     await dbContext.Attendees.findByIdAndDelete(attendee.attendeeId)
+    const towerEvent = await towerEventsService.getTowerEventById(userInfo.eventId)
+    towerEvent.capacity++
+    await towerEvent.save()
   }
 }
 
