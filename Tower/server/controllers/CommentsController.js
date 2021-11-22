@@ -4,12 +4,11 @@ import { commentsService } from '../services/CommentsService'
 
 export class CommentsController extends BaseController {
   constructor() {
-    super('/api/')
+    super('/api/comments')
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
-      .post('comments', this.createComment)
-      .get('events/:id/comments', this.getTowerEventComments)
-      .delete('comments/:id', this.removeComment)
+      .post('', this.createComment)
+      .delete('/:id', this.removeComment)
   }
 
   async createComment(req, res, next) {
@@ -17,16 +16,6 @@ export class CommentsController extends BaseController {
       req.body.creatorId = req.userInfo.id
       const userComment = await commentsService.createComment(req.body)
       return res.send(userComment)
-    } catch (error) {
-      next(error)
-    }
-  }
-
-  async getTowerEventComments(req, res, next) {
-    try {
-      const query = req.params.id
-      const towerEventComments = await commentsService.getTowerEventComments(query)
-      return res.send(towerEventComments)
     } catch (error) {
       next(error)
     }

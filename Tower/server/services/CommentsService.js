@@ -14,7 +14,7 @@ class CommentsService {
 
   async removeComment(user) {
     const userInfo = await dbContext.Comments.findById(user.commentId)
-    if (userInfo.accountId.toString() !== user.accountId) {
+    if (userInfo.creatorId.toString() !== user.accountId) {
       throw new Forbidden('Invalid request!')
     }
     await dbContext.Comments.findByIdAndDelete(user.commentId)

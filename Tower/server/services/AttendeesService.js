@@ -7,10 +7,14 @@ class AttendeesService {
   async attendTowerEvent(body) {
     const towerEvent = await towerEventsService.getTowerEventById(body.eventId)
     const attending = await dbContext.Attendees.findOne({ eventId: body.eventId, accountId: body.accountId })
-    if (attending || towerEvent.isCanceled) {
-      throw new BadRequest('You\'re either attending or this event is canceled!')
+    if (attending || towerEvent.isCanceled || towerEvent.capacity <= 0) {
+      throw new BadRequest('You cannot attend this event due to one of the following reasons: Attending. Canceled, 0 capacity!')
     }
     const attendTowerEvent = await dbContext.Attendees.create(body)
+    // modify the towerEvent
+
+    towerEvent.capacity--
+    await towerEvent.save()
     await attendTowerEvent.populate('event account')
     return attendTowerEvent
   }
