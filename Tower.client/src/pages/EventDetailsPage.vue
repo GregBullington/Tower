@@ -114,7 +114,6 @@
       </div>
     </div>
   </div>
-  <!-- REVIEW need help with making the edit work -->
   <Modal id="eventForm">
     <template #modal-title>
       Create Event!
