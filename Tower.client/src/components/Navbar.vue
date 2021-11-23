@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <div class="d-flex flex-column align-items-center">
+      <div class="d-flex flex-column align-items-center" title="Home">
         <img
           alt="logo"
           src="../assets/img/TowerLogo.png"
@@ -23,21 +23,25 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto">
         <li>
-          <router-link :to="{ name: 'Home' }" class="btn text-success lighten-30 selectable text-uppercase">
+          <router-link :to="{ name: 'Home' }" class="btn text-success lighten-30 selectable text-uppercase" title="Home">
             Home
           </router-link>
         </li>
       </ul>
+      <button v-if="user.isAuthenticated" data-bs-toggle="modal" data-bs-target="#eventForm" title="Create Event" class="btn btn-outline-success me-5">
+        Create Event
+      </button>
       <span class="navbar-text">
         <button
           class="btn selectable text-success lighten-30 text-uppercase my-2 my-lg-0"
+          title="login"
           @click="login"
           v-if="!user.isAuthenticated"
         >
           Login
         </button>
 
-        <div class="dropdown my-2 my-lg-0" v-else>
+        <div class="dropdown my-2 my-lg-0" v-else title="Account">
           <div
             class="dropdown-toggle selectable"
             data-bs-toggle="dropdown"
