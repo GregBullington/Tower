@@ -164,7 +164,7 @@ export default {
     return {
       activeEvent: computed(() => AppState.activeEvent),
       editable,
-      async handleSubmite() {
+      async handleSubmit() {
         try {
           if (editable.value.id) {
           await eventsService.createEvent(editable.value)

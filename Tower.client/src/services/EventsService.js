@@ -28,6 +28,13 @@ class EventsService {
     AppState.events = AppState.events.filter(a => a.id !== AppState.events.id)
     this.getActiveTowerEvent(activeEvent.id)
   }
+
+  // REVIEW Need help getting this to work
+  async editTowerEvent(event) {
+    const res = await api.put('api/events/' + event.id, event)
+    const updatedEvent = res.data
+    AppState.activeEvent = updatedEvent
+  }
 }
 
 export const eventsService = new EventsService()
