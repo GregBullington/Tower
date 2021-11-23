@@ -21,7 +21,7 @@ class TowerEventsService {
 
   async editTowerEvent(id, update) {
     const updatedEvent = await dbContext.TowerEvents.findByIdAndUpdate(id, update, { new: true })
-    if (updatedEvent.creatorId.toString() !== update.id) {
+    if (updatedEvent.creatorId.toString() !== update.creatorId) {
       throw new Forbidden('You are not able to edit this event!')
     }
     if (updatedEvent.isCanceled) {

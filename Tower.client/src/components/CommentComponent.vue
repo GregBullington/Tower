@@ -29,7 +29,7 @@ import { logger } from "../utils/Logger"
 import Pop from "../utils/Pop"
 import { commentsService } from "../services/CommentsService"
 export default {
-  props: {comment: {type: Object, required: true} },
+  props: {comment: Object },
   setup(){
     return {
       account: computed(() => AppState.account),

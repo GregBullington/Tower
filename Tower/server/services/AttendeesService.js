@@ -32,12 +32,12 @@ class AttendeesService {
     return eventAttendees
   }
 
-  async unAttendTowerEvent(attendee) {
-    const userInfo = await dbContext.Attendees.findById(attendee.attendeeId)
-    if (userInfo.accountId.toString() !== attendee.accountId) {
+  async unAttendTowerEvent(accountId, attendeeId) {
+    const userInfo = await dbContext.Attendees.findById(attendeeId)
+    if (userInfo.accountId.toString() !== accountId) {
       throw new Forbidden('Invalid request!')
     }
-    await dbContext.Attendees.findByIdAndDelete(attendee.attendeeId)
+    await dbContext.Attendees.findByIdAndDelete(attendeeId)
     const towerEvent = await towerEventsService.getTowerEventById(userInfo.eventId)
     towerEvent.capacity++
     await towerEvent.save()

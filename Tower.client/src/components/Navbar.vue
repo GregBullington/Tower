@@ -87,6 +87,7 @@ export default {
   setup() {
     return {
       user: computed(() => AppState.user),
+      activeEvent: computed(() => AppState.activeEvent),
       async login() {
         AuthService.loginWithPopup()
       },

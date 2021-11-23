@@ -50,17 +50,17 @@
                 <h5 class="p-0 m-0"><b>AT CAPACITY</b></h5>
               </span>
             </div>
-            <div v-if="account.id && attendedEvents.eventId !== activeEvent.eventId && !activeEvent.isCanceled && activeEvent.capacity > 0" class="col-md-6 d-flex align-items-end justify-content-center">
+            <div v-if="isAttending" class="col-md-6 d-flex align-items-end justify-content-center">
+              <button class="btn btn-danger btn-lg px-4" @click="unAttendTowerEvent(attendee.id)" title="UnAttend Event">
+                UnAttend <i class="mdi mdi-human-handsup"></i>
+              </button>
+            </div>
+            <div v-else-if="account.id && !activeEvent.isCanceled && activeEvent.capacity > 0" class="col-md-6 d-flex align-items-end justify-content-center">
               <button class="btn btn-warning btn-lg px-4" @click="attendTowerEvent(account.id, activeEvent.id)" title="Attend Event">
                 Attend <i class="mdi mdi-human-handsup"></i>
               </button>
             </div>
             <!-- REVIEW need help with showing the unattend button under condition that Im attending also review the functionality -->
-            <div v-if="account.id && attendedEvents.eventId == activeEvent.eventId && !activeEvent.isCanceled && activeEvent.capacity" class="col-md-6 d-flex align-items-end justify-content-center">
-              <button class="btn btn-danger btn-lg px-4" @click="unAttendTowerEvent(account.id)" title="UnAttend Event">
-                UnAttend <i class="mdi mdi-human-handsup"></i>
-              </button>
-            </div>
           </div>
         </div>
       </div>
@@ -85,7 +85,7 @@
           <p><b>Join the conversation</b></p>
         </div>
       </div>
-      <form @submit="postComment()">
+      <form @submit.prevent="postComment()">
         <div class="row">
           <div class="col">
             <textarea style="resize: none;"
@@ -167,7 +167,14 @@ export default {
       events: computed(() => AppState.events),
       activeEvent: computed(() => AppState.activeEvent),
       attendees: computed(() => AppState.attendees),
-      attendedEvents: computed(() => AppState.attendedEvents),
+      isAttending: computed(() => {
+        if(!AppState.account.id) {
+          return false
+        }
+        const found = AppState.attendees.find(a => a.accountId === AppState.account.id)
+        return found ? true : false
+      }),
+      attendee: computed(() => AppState.attendees.find(a => a.accountId === AppState.account.id)),
       comments: computed(() => AppState.comments),
 
       async attendTowerEvent(accountId, eventId) {

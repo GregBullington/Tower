@@ -156,7 +156,7 @@ import { Modal } from "bootstrap"
 import { useRouter } from "vue-router"
 import { watchEffect } from "@vue/runtime-core"
 export default {
-  props: {event: {type: Object, required: true}},
+  props: {event: Object},
   setup(props){
     const router = useRouter()
     const editable = ref({})
@@ -167,9 +167,9 @@ export default {
       async handleSubmit() {
         try {
           if (editable.value.id) {
-          await eventsService.createEvent(editable.value)
-          } else {
             await eventsService.editEvent(editable.value)
+          } else {
+            await eventsService.createEvent(editable.value)
           }
           Modal.getOrCreateInstance(document.getElementById("eventForm")).hide();
           router.push({

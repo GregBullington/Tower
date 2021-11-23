@@ -29,7 +29,7 @@
 import { computed } from "@vue/reactivity"
 import { AppState } from "../AppState"
 export default {
-  props: {event: {type: Object, required: true}},
+  props: {event: Object},
   setup(props) {
     return {
       account: computed(() => AppState.account),

@@ -12,9 +12,9 @@ class AttendeesService {
   }
 
   async unAttendTowerEvent(id) {
-    const res = await api.delete('api/attendees/' + id)
+    await api.delete('api/attendees/' + id)
     // logger.log(res.data)
-    this.getUserAttendance(id)
+    AppState.attendees = AppState.attendees.filter(a => a.id !== id)
   }
 
   async getTowerEventAttendees(id) {
@@ -24,9 +24,8 @@ class AttendeesService {
   }
 
   async getUserAttendance(accountId) {
-    const res = await api.get('account/attendees', accountId)
-    AppState.attendedEvents = res.data
-    // logger.log(res.data)
+    await api.get('account/attendees', accountId)
+
   }
 }
 

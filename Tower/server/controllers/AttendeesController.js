@@ -23,10 +23,9 @@ export class AttendeesController extends BaseController {
 
   async unAttendTowerEvent(req, res, next) {
     try {
-      req.body.accountId = req.userInfo.id
-      req.body.attendeeId = req.params.id
-      const attendee = req.body
-      const unAttended = await attendeesService.unAttendTowerEvent(attendee)
+      const accountId = req.userInfo.id
+      const attendeeId = req.params.id
+      const unAttended = await attendeesService.unAttendTowerEvent(accountId, attendeeId)
       return res.send(unAttended)
     } catch (error) {
       next(error)
