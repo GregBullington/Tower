@@ -1,8 +1,8 @@
 <template>
   <div class="row justify-content-center container-fluid">
-    <div class="col-12 card mt-4 cover-img">
+    <div class="col card mt-4 cover-img">
       <div class="row">
-        <div class="col-md-3 m-5">
+        <div class="col-md-3 m-md-5">
           <p>
             Get ahead of the scalpers.
           </p>
@@ -32,15 +32,6 @@
       </eventcomponent>
     </div>
   </div>
-  <Modal id="eventForm">
-    <template #modal-title>
-      Create Event!
-    </template>
-
-    <template #modal-body>
-      <EventForm />
-    </template>
-  </Modal>
 </template>
 <script>
 import { AppState } from "../AppState"

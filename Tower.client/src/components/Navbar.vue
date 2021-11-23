@@ -76,6 +76,15 @@
         </div>
       </span>
     </div>
+    <Modal id="eventForm">
+      <template #modal-title>
+        Create Event!
+      </template>
+
+      <template #modal-body>
+        <EventForm />
+      </template>
+    </Modal>
   </nav>
 </template>
 

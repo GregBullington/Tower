@@ -20,13 +20,14 @@ class TowerEventsService {
   }
 
   async editTowerEvent(id, update) {
-    const updatedEvent = await dbContext.TowerEvents.findByIdAndUpdate(id, update, { new: true })
-    if (updatedEvent.creatorId.toString() !== update.creatorId) {
+    const found = await dbContext.TowerEvents.findById(id)
+    if (found.creatorId.toString() !== update.creatorId) {
       throw new Forbidden('You are not able to edit this event!')
     }
-    if (updatedEvent.isCanceled) {
+    if (found.isCanceled) {
       throw new BadRequest('This Event is already canceled!')
     }
+    const updatedEvent = await dbContext.TowerEvents.findByIdAndUpdate(id, update, { new: true })
     return updatedEvent
   }
 }

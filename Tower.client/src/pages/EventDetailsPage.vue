@@ -9,7 +9,7 @@
               <a class="dropdown-item selectable bg-danger" @click="cancelTowerEvent(activeEvent)">Cancel Event</a>
             </li>
             <li>
-              <a class="dropdown-item selectable bg-primary" data-bs-toggle="modal" data-bs-target="#eventForm">Edit Event</a>
+              <a class="dropdown-item selectable bg-primary" data-bs-toggle="modal" data-bs-target="#editEventForm">Edit Event</a>
             </li>
           </ul>
         </div>
@@ -67,7 +67,7 @@
     </div>
   </div>
   <div class="row justify-content-center container-fluid">
-    <div v-if="attendees.length > 0 && !activeEvent.isCanceled " class="col-md-10 card bg-grey elevation-2 mt-5 p-1">
+    <div v-if="!activeEvent.isCanceled " class="col-md-10 card bg-grey elevation-2 mt-5 p-1">
       <p>
         <b>See whos attending</b>
       </p>
@@ -101,7 +101,7 @@
         </div>
         <div class="row">
           <div class="col mt-3 text-end mb-5">
-            <button type="submit" class="btn btn-success text-dark btn-lg">
+            <button type="submit" class="btn btn-success text-dark btn-lg" title="Post Comment">
               <b>Post Comment</b>
             </button>
           </div>
@@ -114,7 +114,7 @@
       </div>
     </div>
   </div>
-  <Modal id="eventForm">
+  <Modal id="editEventForm">
     <template #modal-title>
       Create Event!
     </template>
@@ -151,15 +151,7 @@ export default {
         logger.error(error)
         Pop.toast("Something went wrong getting page data!", 'error')
       }
-
-      try {
-        await attendeesService.getUserAttendance(account)
-      } catch (error) {
-        logger.error(error)
-        Pop.toast("Something went wrong getting the events you're attending!", 'error')
-      }
     })
-    // logger.log(AppState.attendedEvents)
     return {
       route,
       comment,
@@ -185,11 +177,10 @@ export default {
           Pop.toast("Something went wrong attending this event!", 'error')
         }
       },
-// REVIEW need help with this 
-      async unAttendTowerEvent(accountId) {
+      async unAttendTowerEvent(attendeeId) {
         try {
           if(await Pop.confirm('You are UnAttending this event, Are you Sure?'))
-          await attendeesService.unAttendTowerEvent(accountId)
+          await attendeesService.unAttendTowerEvent(attendeeId)
         } catch (error) {
           logger.error(error)
           Pop.toast("Something went wrong UnAttending this event!", 'error')

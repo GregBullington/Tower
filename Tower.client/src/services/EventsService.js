@@ -1,5 +1,5 @@
 import { AppState } from "../AppState"
-import { logger } from "../utils/Logger"
+import { router } from "../router"
 import { api } from "./AxiosService"
 
 
@@ -14,7 +14,10 @@ class EventsService {
     const res = await api.post('api/events', newEvent)
     // logger.log(res.data)
     AppState.events = [...AppState.events, res.data]
-    AppState.activeProject = res.data
+    AppState.activeEvent = res.data
+    router.push({
+      name: 'EventDetails', params: { id: res.data.id }
+    })
   }
 
   async getActiveTowerEvent(id) {

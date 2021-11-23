@@ -6,7 +6,7 @@
       </h3>
     </div>
     <div class="row">
-      <div v-for="a in attendedEvents" :key="a.id" class="col-md-3">
+      <div v-for="a in attendees" :key="a.id" class="col-md-3">
         <div class="card elevation-2 bg-secondary mb-5 p-1" :title="a.event.name">
           <img class="standard-height" :src="a.event.coverImg" alt="event cover image">
           <h4>
@@ -31,7 +31,7 @@
               </span>
             </div>
             <div class="col-md-6 text-end">
-              <button class="btn btn-danger btn-sm" @click="unAttendTowerEvent(account.id)" title="UnAttend Event">
+              <button class="btn btn-danger btn-sm" @click="unAttendTowerEvent(a.id)" title="UnAttend Event">
                 UnAttend <i class="mdi mdi-human-handsup"></i>
               </button>
             </div>
@@ -62,13 +62,12 @@ export default {
     return {
       account: computed(() => AppState.account),
       events: computed(() => AppState.events),
-      attendees: computed(() => AppState.attendees),
-      attendedEvents: computed(() => AppState.attendedEvents),
+      attendees: computed(() => AppState.attendees.filter(a => !a.event.isCanceled)),
 
-      async unAttendTowerEvent(accountId) {
+      async unAttendTowerEvent(attendeeId) {
         try {
           if(await Pop.confirm('You are UnAttending this event, Are you Sure?'))
-          await attendeesService.unAttendTowerEvent(accountId)
+          await attendeesService.unAttendTowerEvent(attendeeId)
         } catch (error) {
           logger.error(error)
           Pop.toast("Something went wrong UnAttending this event!", 'error')

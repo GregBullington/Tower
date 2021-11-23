@@ -129,6 +129,7 @@
             title="Cancel"
             type="button"
             class="btn rounded bg-none ms-2 px-5"
+            data-bs-dismiss="modal"
           >
             Cancel
           </button>
@@ -170,11 +171,11 @@ export default {
             await eventsService.editEvent(editable.value)
           } else {
             await eventsService.createEvent(editable.value)
+            editable.value = {}
           }
+          Modal.getOrCreateInstance(document.getElementById("editEventForm")).hide();
           Modal.getOrCreateInstance(document.getElementById("eventForm")).hide();
-          router.push({
-            name: 'EventDetails', params: {id: AppState.activeEvent.id}
-          })
+        
         } catch (error) {
           logger.error(error)
           Pop.toast("Something went wrong creating Event!", 'error')

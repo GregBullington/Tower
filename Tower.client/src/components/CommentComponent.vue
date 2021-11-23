@@ -1,7 +1,7 @@
 <template>
   <div class="row justify-content-center m-2">
     <div class="col-md-2 d-flex justify-content-center">
-      <img class="img-container" :src="comment.creator.picture" alt="profile picture" title="{{comment.creator.name}}">
+      <img class="img-container" :src="comment.creator.picture" alt="profile picture" :title="comment.creator.name">
     </div>
     <div class="col-md-10 card bg-dark">
       <div class="row">
